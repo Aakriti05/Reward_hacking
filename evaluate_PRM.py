@@ -88,7 +88,7 @@ def evaluate_responses(model, tokenizer, response_data, output_file):
             "labels": labels
         })
 
-        print(f"Evaluated {i+1}/{len(response_data)} questions.", flush=True)
+        print(f"Evaluated {i+1}/{len(response_data)} questions.", labels, flush=True)
 
         # Save after every evaluation to prevent data loss
         with open(output_file, "w") as f:

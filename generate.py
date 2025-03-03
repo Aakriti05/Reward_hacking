@@ -6,7 +6,7 @@ from datasets import load_dataset
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
-def load_model(model_name="Qwen/Qwen2.5-Math-1.5B"):
+def load_model(model_name="Qwen/Qwen2.5-Math-7B"):
     """Loads the specified LLM model and tokenizer."""
     device = "cuda" if torch.cuda.is_available() else "cpu"
     tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
@@ -82,8 +82,8 @@ def load_dataset_and_generate_responses(args):
         })
 
         print(f"Processed {i+1}/{args.num_samples} questions.", flush=True)
-        print("Response 1:", response_1)
-        print("Response 2:", response_2)
+        #print("Response 1:", response_1)
+        #print("Response 2:", response_2)
 
         # Save responses
         with open(args.output_file, "w") as f:
@@ -93,13 +93,13 @@ def load_dataset_and_generate_responses(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate CoT responses using Qwen LLM.")
-    parser.add_argument("--model_name", type=str, default="Qwen/Qwen2.5-Math-1.5B", help="LLM model name")
+    parser.add_argument("--model_name", type=str, default="Qwen/Qwen2.5-Math-7B", help="LLM model name")
     parser.add_argument("--dataset_name", type=str, default="SynthLabsAI/Big-Math-RL-Verified", help="Dataset name")
     parser.add_argument("--dataset_split", type=str, default="train", help="Dataset split (train/test/val)")
-    parser.add_argument("--num_samples", type=int, default=10, help="Number of samples to process")
+    parser.add_argument("--num_samples", type=int, default=5000, help="Number of samples to process")
     parser.add_argument("--diversity_1", type=float, default=1.0, help="Diversity parameter for first response")
     parser.add_argument("--diversity_2", type=float, default=1.5, help="Diversity parameter for second response")
-    parser.add_argument("--output_file", type=str, default="responses.json", help="Output JSON file")
+    parser.add_argument("--output_file", type=str, default="responses_7B.json", help="Output JSON file")
 
     args = parser.parse_args()
     load_dataset_and_generate_responses(args)
